@@ -1,7 +1,9 @@
 package com.example.individualproject;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -13,8 +15,16 @@ public class Customer {
     private Boolean active;
     private String create_date;
     private Long rental_count;
+    private Short store_id;
+    private Short address_id;
 
-    public Customer(Short customer_id, String first_name, String last_name, String email, Boolean active, String create_date, Long rental_count)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> payments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rental> rentals = new ArrayList<>();
+
+    public Customer(Short customer_id, String first_name, String last_name, String email, Boolean active, String create_date, Long rental_count, Short store_id, Short address_id)
     {
         this.customer_id = customer_id;
         this.first_name = first_name;
@@ -23,7 +33,11 @@ public class Customer {
         this.active = active;
         this.create_date = create_date;
         this.rental_count = rental_count;
+        this.store_id = store_id;
+        this.address_id = address_id;
     }
+
+    public Customer(){}
 
     public Short getCustomer_id() {
         return customer_id;
@@ -33,16 +47,32 @@ public class Customer {
         return first_name;
     }
 
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
     public String getLast_name() {
         return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Boolean getActive() {
         return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public String getCreate_date() {
@@ -51,5 +81,21 @@ public class Customer {
 
     public Long getRental_count() {
         return rental_count;
+    }
+
+    public Short getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(Short store_id) {
+        this.store_id = store_id;
+    }
+
+    public Short getAddress_id() {
+        return address_id;
+    }
+
+    public void setAddress_id(Short address_id) {
+        this.address_id = address_id;
     }
 }

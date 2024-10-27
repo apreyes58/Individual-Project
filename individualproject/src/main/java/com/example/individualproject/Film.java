@@ -24,6 +24,8 @@ public class Film {
         this.actors = actors;
     }
 
+    public Film(){}
+
     public String getFilm_id() {
         return film_id;
     }
